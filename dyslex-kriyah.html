@@ -5,35 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dyslex-Kriyah</title>
     <style>
+        @font-face {
+            font-family: 'DyslexiaHebrew';
+            src: url('assets/fonts/Dyslexia-Hebrew.otf') format('opentype');
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             color: #333;
-            background: url('dyslex-kriyah-bg.jpg') no-repeat center center fixed;
+            background: url('assets/images/dyslex-kriyah-bg.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-color: rgba(255, 255, 255, 0.8); /* Overlay for fade effect */
+            background-color: rgba(255, 255, 255, 0.8);
             background-blend-mode: lighten;
         }
+
         header {
             background-color: #007bff;
             color: white;
             padding: 20px;
             text-align: center;
         }
-        nav {
+
+        .title-section {
             text-align: center;
-            margin-bottom: 20px;
+            margin: 40px 0;
         }
-        nav a {
-            color: #007bff;
-            text-decoration: none;
-            margin: 0 15px;
+
+        h1.english-title {
+            font-size: 3rem;
             font-weight: bold;
         }
-        nav a:hover {
-            text-decoration: underline;
+
+        h1.hebrew-title {
+            font-size: 3rem;
+            font-family: 'DyslexiaHebrew', Arial, sans-serif;
+            direction: rtl;
         }
+
         .container {
             max-width: 900px;
             margin: 20px auto;
@@ -42,6 +52,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         footer {
             text-align: center;
             padding: 10px;
@@ -52,24 +63,18 @@
 </head>
 <body>
     <header>
-        <h1>Dyslex-Kriyah: A Dyslexia-Friendly Hebrew Font</h1>
+        <h1>Dyslex-Kriyah</h1>
     </header>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="lor-link.html">LOR Link</a>
-    </nav>
+    <div class="title-section">
+        <h1 class="english-title">Dyslex-Kriyah</h1>
+        <h1 class="hebrew-title">דיסלקריא</h1>
+    </div>
 
     <div class="container">
         <h2>About Dyslex-Kriyah</h2>
         <p>Dyslex-Kriyah is designed to make Hebrew reading easier for individuals with dyslexia. The font incorporates features like heavier bottoms, distinctive shapes, and larger openings to improve readability.</p>
-        <p><strong>Features:</strong></p>
-        <ul>
-            <li>Heavier bottoms for a stronger baseline.</li>
-            <li>Distinctive shapes to minimize letter confusion.</li>
-            <li>Larger openings to enhance visibility.</li>
-        </ul>
-        <a href="Dyslexia-Hebrew.otf" class="button" download>Download the Font</a>
+        <a href="assets/fonts/Dyslexia-Hebrew.otf" class="button" download>Download the Font</a>
         <p>Interested in participating in our study? <a href="mailto:jake@example.com?subject=Dyslex-Kriyah Study">Sign up here!</a></p>
     </div>
 
