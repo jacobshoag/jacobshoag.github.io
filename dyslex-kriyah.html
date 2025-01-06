@@ -75,18 +75,14 @@
         }
 
         .letter-comparison {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            gap: 50px;
+            position: relative; /* Add this */
+            height: 100px; /* Adjust height as needed */
             margin-top: 20px;
         }
 
         .letter-container {
+            position: absolute; /* Add this */
             text-align: center;
-            flex: 1;
-            display: flex;
-            align-items: flex-end; /* Align items to the bottom */
         }
 
         .letter {
@@ -96,10 +92,16 @@
 
         .letter.dyslexia-hebrew {
             font-family: 'DyslexiaHebrew', Arial, sans-serif;
+            top: 0; /* Adjust position as needed */
+            left: 50%; /* Adjust position as needed */
+            transform: translateX(-50%);
         }
 
         .letter.open-sans-hebrew {
             font-family: 'OpenSansHebrew', Arial, sans-serif;
+            top: 0; /* Adjust position as needed */
+            right: 50%; /* Adjust position as needed */
+            transform: translateX(50%);
         }
 
         footer {
