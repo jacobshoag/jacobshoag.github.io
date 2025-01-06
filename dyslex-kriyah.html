@@ -1,21 +1,104 @@
-<div class="container">
-    <h2>About Dyslex-Kriyah</h2>
-    <p>Dyslex-Kriyah is designed to make Hebrew reading easier for individuals with dyslexia. The font incorporates features like heavier bottoms, distinctive shapes, and larger openings to improve readability.</p>
-    <a href="assets/fonts/Dyslexia-Hebrew.otf" class="button" download>Download the Font</a>
-    <p>Interested in participating in our study? <a href="mailto:jake@example.com?subject=Dyslex-Kriyah Study">Sign up here!</a></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dyslex-Kriyah</title>
+    <style>
+        @font-face {
+            font-family: 'DyslexiaHebrew';
+            src: url('assets/fonts/Dyslexia-Hebrew.otf') format('opentype');
+        }
 
-    <h2>Dyslex-Kriyah Bencher</h2>
-    <p>We’ve created a Birkat Hamazon booklet using the Dyslex-Kriyah font to make Hebrew blessings more accessible. Download the PDF below:</p>
-    <a href="assets/other/DyslexKriya-Bencher.pdf" class="button" download>Download the Dyslex-Kriyah Bencher (PDF)</a>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: url('assets/images/dyslex-kriyah-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-color: rgba(255, 255, 255, 0.8);
+            background-blend-mode: lighten;
+        }
 
-    <!-- New Section: Design Principles -->
-    <h2>Design Principles of Dyslex-Kriyah</h2>
-    <h3>1. Heavier Bottoms</h3>
-    <p>One of the key principles behind the Dyslex-Kriyah font is giving letters heavier bottoms. This design choice ensures that letters have a consistent baseline, reducing the chances of dyslexic readers rotating or inverting them. The added visual weight at the bottom makes it easier for readers to maintain orientation, enhancing readability.</p>
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
 
-    <!-- Image Comparison -->
-    <div style="text-align: center;">
-        <img src="assets/images/dyslex-kriyah-samech.jpg" alt="Dyslex-Kriyah Samech" style="margin: 10px; width: 100px;">
-        <img src="assets/images/open_sans_samech.jpg" alt="Open Sans Samech" style="margin: 10px; width: 100px;">
+        .title-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        h1.english-title {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        h1.hebrew-title {
+            font-size: 3rem;
+            font-family: 'DyslexiaHebrew', Arial, sans-serif;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        a.button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dyslex-Kriyah</h1>
+    </header>
+
+    <div class="title-section">
+        <h1 class="english-title">Dyslex-Kriyah</h1>
+        <h1 class="hebrew-title">דיסלקריא</h1>
     </div>
-</div>
+
+    <div class="container">
+        <h2>About Dyslex-Kriyah</h2>
+        <p>Dyslex-Kriyah is designed to make Hebrew reading easier for individuals with dyslexia. The font incorporates features like heavier bottoms, distinctive shapes, and larger openings to improve readability.</p>
+        <a href="assets/fonts/Dyslexia-Hebrew.otf" class="button" download>Download the Font</a>
+        <p>Interested in participating in our study? <a href="mailto:jake@example.com?subject=Dyslex-Kriyah Study">Sign up here!</a></p>
+
+        <h2>Dyslex-Kriyah Bencher</h2>
+        <p>We’ve created a Birkat Hamazon booklet using the Dyslex-Kriyah font to make Hebrew blessings more accessible. Download the PDF below:</p>
+        <a href="assets/other/DyslexKriya-Bencher.pdf" class="button" download>Download the Dyslex-Kriyah Bencher (PDF)</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Jake Shoag. All rights reserved.</p>
+    </footer>
+</body>
+</html>
