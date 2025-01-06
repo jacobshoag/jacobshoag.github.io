@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dyslex-Kriyah</title>
     <style>
+        /* Load the custom fonts */
         @font-face {
             font-family: 'DyslexiaHebrew';
             src: url('assets/fonts/Dyslexia-Hebrew.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'OpenSansHebrew';
+            src: url('assets/fonts/OpenSansHebrew-Regular.otf') format('opentype');
         }
 
         body {
@@ -53,19 +59,22 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        a.button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 10px;
-            font-weight: bold;
+        .letter-comparison {
+            text-align: center;
+            margin-top: 20px;
         }
 
-        a.button:hover {
-            background-color: #0056b3;
+        .letter {
+            font-size: 5rem;
+            margin: 20px;
+        }
+
+        .letter.dyslexia-hebrew {
+            font-family: 'DyslexiaHebrew', Arial, sans-serif;
+        }
+
+        .letter.open-sans-hebrew {
+            font-family: 'OpenSansHebrew', Arial, sans-serif;
         }
 
         footer {
@@ -73,18 +82,6 @@
             padding: 10px;
             background-color: #007bff;
             color: white;
-        }
-
-        .image-comparison {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .image-comparison img {
-            margin: 10px;
-            width: 100px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
         }
     </style>
 </head>
@@ -116,9 +113,15 @@
             One of the key principles behind the Dyslex-Kriyah font is giving letters heavier bottoms. This design choice ensures that letters have a consistent baseline, reducing the chances of dyslexic readers rotating or inverting them. The added visual weight at the bottom makes it easier for readers to maintain orientation, enhancing readability.
         </p>
 
-        <div class="image-comparison">
-            <img src="assets/images/dyslex-kriyah-samech.jpg" alt="Dyslex-Kriyah Samech">
-            <img src="assets/images/open_sans_samech.jpg" alt="Open Sans Samech">
+        <div class="letter-comparison">
+            <div>
+                <span class="letter dyslexia-hebrew">ס</span>
+                <p>Dyslex-Kriyah Font</p>
+            </div>
+            <div>
+                <span class="letter open-sans-hebrew">ס</span>
+                <p>Open Sans Hebrew Font</p>
+            </div>
         </div>
     </div>
 
