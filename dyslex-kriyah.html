@@ -70,25 +70,21 @@
       background-color: #0056b3;
     }
 
-    /* Table for letter comparison */
-    .letter-table {
-      margin: 20px auto;
-      border-collapse: collapse;
-    }
-    .letter-table td {
-      padding: 20px 40px;
+    /* Optional styling for the image comparison */
+    .image-comparison {
       text-align: center;
-      vertical-align: middle;
+      margin: 20px auto;
     }
-    .letter {
-      font-size: 5rem;
+    .image-comparison div {
+      display: inline-block;
+      margin: 0 20px;
+      vertical-align: top;
+    }
+    .image-comparison img {
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
       margin-bottom: 10px;
-    }
-    .letter.dyslexia-hebrew {
-      font-family: 'DyslexiaHebrew', Arial, sans-serif;
-    }
-    .letter.open-sans-hebrew {
-      font-family: 'OpenSansHebrew', Arial, sans-serif;
     }
 
     footer {
@@ -127,19 +123,19 @@
       One of the key principles behind the Dyslex-Kriyah font is giving letters heavier bottoms. This design choice ensures that letters have a consistent baseline, reducing the chances of dyslexic readers rotating or inverting them. The added visual weight at the bottom makes it easier for readers to maintain orientation, enhancing readability.
     </p>
 
-    <!-- Table for Letter Comparison: Open Sans on the Left, Dyslex-Kriyah on the Right -->
-    <table class="letter-table">
-      <tr>
-        <td>
-          <span class="letter open-sans-hebrew">ס</span>
-          <p>Open Sans Hebrew Font</p>
-        </td>
-        <td>
-          <span class="letter dyslexia-hebrew">ס</span>
-          <p>Dyslex-Kriyah Font</p>
-        </td>
-      </tr>
-    </table>
+    <!-- Example Comparison Images -->
+    <div class="image-comparison">
+      <!-- Open Sans Samech -->
+      <div>
+        <img src="assets/images/opensamech.png" alt="Open Sans Samech">
+        <p>Open Sans Hebrew</p>
+      </div>
+      <!-- Dyslex-Kriyah Samech -->
+      <div>
+        <img src="assets/images/dyslexiasamech.png" alt="Dyslex-Kriyah Samech">
+        <p>Dyslex-Kriyah Font</p>
+      </div>
+    </div>
   </div>
 
   <footer>
