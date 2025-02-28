@@ -27,6 +27,12 @@
             margin-top: 10px;
             font-weight: bold;
         }
+        #wordChain {
+            font-size: 1.2rem;
+            color: #007bff;
+            margin-top: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -41,7 +47,9 @@
         <input type="text" id="wordInput" placeholder="Enter next word">
         <button onclick="submitWord()">Submit</button>
         <button onclick="restartGame()">New Game</button>
+
         <p id="status"></p>
+        <p><strong>Current Chain:</strong> <span id="wordChain"></span></p>
     </div>
 
     <script>
@@ -129,6 +137,7 @@
             document.getElementById('startWord').innerText = currentWord;
             document.getElementById('targetWord').innerText = targetWord;
             document.getElementById('status').innerText = "Game started! Enter words to reach the target.";
+            document.getElementById('wordChain').innerText = currentWord;
             document.getElementById('wordInput').value = "";
             minChainLength++; // Increase difficulty for next game
         }
@@ -150,6 +159,7 @@
             wordPath.push(input);
             currentWord = input;
             document.getElementById('wordInput').value = "";
+            document.getElementById('wordChain').innerText = wordPath.join(" → ");
 
             if (currentWord === targetWord) {
                 document.getElementById('status').innerText = "🎉 You won! Path: " + wordPath.join(" → ");
@@ -164,6 +174,14 @@
             minChainLength = 2;
             startNewGame();
         }
+
+        // Enable pressing "Enter" to submit a word
+        document.getElementById("wordInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                submitWord();
+            }
+        });
 
         // Load words and start game
         loadWords();
