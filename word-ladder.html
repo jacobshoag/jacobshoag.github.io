@@ -27,6 +27,11 @@
             margin-top: 10px;
             font-weight: bold;
         }
+        #wordPathDisplay {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #0056b3;
+        }
         .button {
             display: inline-block;
             padding: 10px 15px;
@@ -40,6 +45,9 @@
         .button:hover {
             background-color: #0056b3;
         }
+        .button-container {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -52,11 +60,14 @@
         <p><strong>Target Word:</strong> <span id="targetWord">Loading...</span></p>
 
         <input type="text" id="wordInput" placeholder="Enter next word">
-        <button onclick="submitWord()">Submit</button>
-        <button onclick="restartGame()">New Game</button>
+        <button id="submitButton" onclick="submitWord()">Submit</button>
+        <button id="newGameButton" onclick="restartGame()">New Game</button>
         <p id="status"></p>
+        <p id="wordPathDisplay"><strong>Current Path:</strong> </p>
 
-        <a href="resources.html" class="button">Return to Resources</a>
+        <div class="button-container">
+            <a href="resources.html" class="button">Return to Resources</a>
+        </div>
     </div>
 
     <script>
@@ -145,6 +156,7 @@
             document.getElementById('targetWord').innerText = targetWord;
             document.getElementById('status').innerText = "Game started! Enter words to reach the target.";
             document.getElementById('wordInput').value = "";
+            document.getElementById('wordPathDisplay').innerHTML = "<strong>Current Path:</strong> " + wordPath.join(" → ");
             minChainLength++; // Increase difficulty for next game
         }
 
@@ -165,15 +177,16 @@
             wordPath.push(input);
             currentWord = input;
             document.getElementById('wordInput').value = "";
+            document.getElementById('wordPathDisplay').innerHTML = "<strong>Current Path:</strong> " + wordPath.join(" → ");
 
             if (currentWord === targetWord) {
                 document.getElementById('status').innerText = "🎉 You won! Next puzzle loading...";
-                document.querySelector("button[onclick='submitWord()']").disabled = true;
-                document.querySelector("button[onclick='restartGame()']").disabled = true;
+                document.getElementById('submitButton').disabled = true;
+                document.getElementById('newGameButton').disabled = true;
 
                 setTimeout(() => {
-                    document.querySelector("button[onclick='submitWord()']").disabled = false;
-                    document.querySelector("button[onclick='restartGame()']").disabled = false;
+                    document.getElementById('submitButton').disabled = false;
+                    document.getElementById('newGameButton').disabled = false;
                     startNewGame();
                 }, 2000);
             } else {
