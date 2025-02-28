@@ -33,6 +33,10 @@
             margin-top: 10px;
             font-weight: bold;
         }
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -45,8 +49,8 @@
         <p><strong>Target Word:</strong> <span id="targetWord">Loading...</span></p>
 
         <input type="text" id="wordInput" placeholder="Enter next word">
-        <button onclick="submitWord()">Submit</button>
-        <button onclick="restartGame()">New Game</button>
+        <button id="submitBtn" onclick="submitWord()">Submit</button>
+        <button id="restartBtn" onclick="restartGame()">New Game</button>
 
         <p id="status"></p>
         <p><strong>Current Chain:</strong> <span id="wordChain"></span></p>
@@ -139,6 +143,7 @@
             document.getElementById('status').innerText = "Game started! Enter words to reach the target.";
             document.getElementById('wordChain').innerText = currentWord;
             document.getElementById('wordInput').value = "";
+            enableButtons();
             minChainLength++; // Increase difficulty for next game
         }
 
@@ -162,8 +167,9 @@
             document.getElementById('wordChain').innerText = wordPath.join(" → ");
 
             if (currentWord === targetWord) {
-                document.getElementById('status').innerText = "🎉 You won! Path: " + wordPath.join(" → ");
-                setTimeout(startNewGame, 3000); // Start a new game after 3 seconds
+                document.getElementById('status').innerText = "🎉 You won! Next puzzle loading...";
+                disableButtons();
+                setTimeout(startNewGame, 2000); // Load new game after 2 seconds
             } else {
                 document.getElementById('status').innerText = "Good! Keep going.";
             }
@@ -182,6 +188,18 @@
                 submitWord();
             }
         });
+
+        // Disable buttons while waiting for the next puzzle
+        function disableButtons() {
+            document.getElementById("submitBtn").classList.add("disabled");
+            document.getElementById("restartBtn").classList.add("disabled");
+        }
+
+        // Enable buttons when the next puzzle is ready
+        function enableButtons() {
+            document.getElementById("submitBtn").classList.remove("disabled");
+            document.getElementById("restartBtn").classList.remove("disabled");
+        }
 
         // Load words and start game
         loadWords();
