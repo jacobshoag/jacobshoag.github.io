@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Ladder Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            font-size: 1rem;
+            padding: 8px;
+            margin: 5px;
+        }
+        #status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Word Ladder Game</h1>
+    <div class="container">
+        <p>Transform the start word into the target word, changing one letter at a time. Each step must be a real word!</p>
+        
+        <p><strong>Start Word:</strong> <span id="startWord">Loading...</span></p>
+        <p><strong>Target Word:</strong> <span id="targetWord">Loading...</span></p>
+
+        <input type="text" id="wordInput" placeholder="Enter next word">
+        <button onclick="submitWord()">Submit</button>
+        <button onclick="restartGame()">New Game</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        let wordList = new Set();
+        let wordGraph = {};
+        let currentWord = "";
+        let targetWord = "";
+        let wordPath = [];
+
+        // Load the word list from a text file
+        async function loadWords() {
+            try {
+                const response = await fetch('assets/other/corncob_lowercase.txt'); // Adjust path if necessary
+                const text = await response.text();
+                const words = text.split(/\r?\n/).map(w => w.trim()).filter(w => w.length === 3);
+                
+                words.forEach(word => wordList.add(word));
+                buildGraph();
+                startNewGame();
+            } catch (error) {
+                document.getElementById('status').innerText = "Error loading word list.";
+                console.error("Failed to load words:", error);
+            }
+        }
+
+        // Build graph of words that differ by one letter
+        function buildGraph() {
+            wordList.forEach(word => {
+                wordGraph[word] = new Set();
+                for (let otherWord of wordList) {
+                    if (oneLetterDifference(word, otherWord)) {
+                        wordGraph[word].add(otherWord);
+                    }
+                }
+            });
+        }
+
+        // Check if two words differ by exactly one letter
+        function oneLetterDifference(w1, w2) {
+            if (w1.length !== w2.length) return false;
+            let diffCount = 0;
+            for (let i = 0; i < w1.length; i++) {
+                if (w1[i] !== w2[i]) diffCount++;
+                if (diffCount > 1) return false;
+            }
+            return diffCount === 1;
+        }
+
+        // Find word pairs with increasing difficulty
+        function findWordPair(minSteps) {
+            const pairs = [];
+            for (let start of wordList) {
+                let queue = [[start, 0]];
+                let visited = new Set([start]);
+
+                while (queue.length) {
+                    let [word, steps] = queue.shift();
+                    if (steps >= minSteps && word !== start) {
+                        pairs.push([start, word]);
+                        break;
+                    }
+                    for (let neighbor of wordGraph[word] || []) {
+                        if (!visited.has(neighbor)) {
+                            visited.add(neighbor);
+                            queue.push([neighbor, steps + 1]);
+                        }
+                    }
+                }
+            }
+            return pairs.length > 0 ? pairs[Math.floor(Math.random() * pairs.length)] : null;
+        }
+
+        // Start a new game with increasing difficulty
+        let minChainLength = 2;
+        function startNewGame() {
+            let pair = findWordPair(minChainLength);
+            if (!pair) {
+                document.getElementById('status').innerText = "No valid word pairs found.";
+                return;
+            }
+
+            [currentWord, targetWord] = pair;
+            wordPath = [currentWord];
+
+            document.getElementById('startWord').innerText = currentWord;
+            document.getElementById('targetWord').innerText = targetWord;
+            document.getElementById('status').innerText = "Game started! Enter words to reach the target.";
+            document.getElementById('wordInput').value = "";
+            minChainLength++; // Increase difficulty for next game
+        }
+
+        // Handle word submission
+        function submitWord() {
+            let input = document.getElementById('wordInput').value.toLowerCase().trim();
+
+            if (!wordList.has(input)) {
+                document.getElementById('status').innerText = "Invalid word!";
+                return;
+            }
+
+            if (!oneLetterDifference(currentWord, input)) {
+                document.getElementById('status').innerText = "Word must differ by exactly one letter!";
+                return;
+            }
+
+            wordPath.push(input);
+            currentWord = input;
+            document.getElementById('wordInput').value = "";
+
+            if (currentWord === targetWord) {
+                document.getElementById('status').innerText = "🎉 You won! Path: " + wordPath.join(" → ");
+                setTimeout(startNewGame, 3000); // Start a new game after 3 seconds
+            } else {
+                document.getElementById('status').innerText = "Good! Keep going.";
+            }
+        }
+
+        // Restart game manually
+        function restartGame() {
+            minChainLength = 2;
+            startNewGame();
+        }
+
+        // Load words and start game
+        loadWords();
+    </script>
+
+</body>
+</html>
