@@ -27,10 +27,11 @@
             margin-top: 10px;
             font-weight: bold;
         }
-        #wordPathDisplay {
+        #wordChain {
+            font-size: 1.1rem;
             margin-top: 10px;
             font-weight: bold;
-            color: #0056b3;
+            color: #007bff;
         }
         .button {
             display: inline-block;
@@ -45,9 +46,6 @@
         .button:hover {
             background-color: #0056b3;
         }
-        .button-container {
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -60,14 +58,15 @@
         <p><strong>Target Word:</strong> <span id="targetWord">Loading...</span></p>
 
         <input type="text" id="wordInput" placeholder="Enter next word">
-        <button id="submitButton" onclick="submitWord()">Submit</button>
-        <button id="newGameButton" onclick="restartGame()">New Game</button>
+        <button onclick="submitWord()">Submit</button>
+        <button onclick="restartGame()">New Game</button>
         <p id="status"></p>
-        <p id="wordPathDisplay"><strong>Current Path:</strong> </p>
 
-        <div class="button-container">
-            <a href="resources.html" class="button">Return to Resources</a>
-        </div>
+        <!-- Display the word chain -->
+        <p><strong>Word Chain:</strong></p>
+        <p id="wordChain">-</p>
+
+        <a href="resources.html" class="button">Return to Resources</a>
     </div>
 
     <script>
@@ -155,8 +154,8 @@
             document.getElementById('startWord').innerText = currentWord;
             document.getElementById('targetWord').innerText = targetWord;
             document.getElementById('status').innerText = "Game started! Enter words to reach the target.";
+            document.getElementById('wordChain').innerText = wordPath.join(" → ");
             document.getElementById('wordInput').value = "";
-            document.getElementById('wordPathDisplay').innerHTML = "<strong>Current Path:</strong> " + wordPath.join(" → ");
             minChainLength++; // Increase difficulty for next game
         }
 
@@ -177,16 +176,16 @@
             wordPath.push(input);
             currentWord = input;
             document.getElementById('wordInput').value = "";
-            document.getElementById('wordPathDisplay').innerHTML = "<strong>Current Path:</strong> " + wordPath.join(" → ");
+            document.getElementById('wordChain').innerText = wordPath.join(" → "); // Update chain display
 
             if (currentWord === targetWord) {
                 document.getElementById('status').innerText = "🎉 You won! Next puzzle loading...";
-                document.getElementById('submitButton').disabled = true;
-                document.getElementById('newGameButton').disabled = true;
+                document.querySelector("button[onclick='submitWord()']").disabled = true;
+                document.querySelector("button[onclick='restartGame()']").disabled = true;
 
                 setTimeout(() => {
-                    document.getElementById('submitButton').disabled = false;
-                    document.getElementById('newGameButton').disabled = false;
+                    document.querySelector("button[onclick='submitWord()']").disabled = false;
+                    document.querySelector("button[onclick='restartGame()']").disabled = false;
                     startNewGame();
                 }, 2000);
             } else {
