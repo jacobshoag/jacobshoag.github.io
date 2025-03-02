@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jake's Word Swap Game</title>
+    <title>Word Ladder Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,7 +18,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        input, button {
+        input, button, select {
             font-size: 1rem;
             padding: 8px;
             margin: 5px;
@@ -50,25 +50,29 @@
 </head>
 <body>
 
-    <h1>Jake's Word Swap Game</h1>
+    <h1>Word Ladder Game</h1>
     <div class="container">
-        <p>Transform the start word into the target word, changing one letter at a time.</p>
-        <p>• Each step must be a real word.</p>
-        <p>• The game gets harder as you play!</p>
-        
-        <p><strong>Start Word:</strong> <span id="startWord">Loading...</span></p>
-        <p><strong>Target Word:</strong> <span id="targetWord">Loading...</span></p>
+        <p>Transform the start word into the target word, changing one letter at a time. Each step must be a real word!</p>
+
+        <label for="wordLength">Select Word Length:</label>
+        <select id="wordLength">
+            <option value="3">3-Letter Words</option>
+            <option value="4">4-Letter Words</option>
+        </select>
+        <button onclick="restartGame()">Start Game</button>
+
+        <p><strong>Start Word:</strong> <span id="startWord">-</span></p>
+        <p><strong>Target Word:</strong> <span id="targetWord">-</span></p>
 
         <input type="text" id="wordInput" placeholder="Enter next word">
         <button onclick="submitWord()">Submit</button>
-        <button onclick="restartGame()">New Game</button>
         <p id="status"></p>
 
         <!-- Display the word chain -->
         <p><strong>Word Chain:</strong></p>
         <p id="wordChain">-</p>
 
-        <a href="resources.html" class="button">Return to Jake's Website</a>
+        <a href="resources.html" class="button">Return to Resources</a>
     </div>
 
     <script>
@@ -77,17 +81,17 @@
         let currentWord = "";
         let targetWord = "";
         let wordPath = [];
+        let selectedWordLength = 3;
 
         // Load the word list from a text file
         async function loadWords() {
             try {
-                const response = await fetch('assets/other/corncob_lowercase.txt'); // Adjust path if necessary
+                const response = await fetch('assets/other/corncob_lowercase.txt');
                 const text = await response.text();
-                const words = text.split(/\r?\n/).map(w => w.trim()).filter(w => w.length === 3);
-                
-                words.forEach(word => wordList.add(word));
-                buildGraph();
-                startNewGame();
+                const words = text.split(/\r?\n/).map(w => w.trim());
+
+                wordList = new Set(words); // Store all words
+                restartGame(); // Start game after loading
             } catch (error) {
                 document.getElementById('status').innerText = "Error loading word list.";
                 console.error("Failed to load words:", error);
@@ -95,10 +99,11 @@
         }
 
         // Build graph of words that differ by one letter
-        function buildGraph() {
-            wordList.forEach(word => {
+        function buildGraph(validWords) {
+            wordGraph = {};
+            validWords.forEach(word => {
                 wordGraph[word] = new Set();
-                for (let otherWord of wordList) {
+                for (let otherWord of validWords) {
                     if (oneLetterDifference(word, otherWord)) {
                         wordGraph[word].add(otherWord);
                     }
@@ -118,9 +123,9 @@
         }
 
         // Find word pairs with increasing difficulty
-        function findWordPair(minSteps) {
+        function findWordPair(validWords, minSteps) {
             const pairs = [];
-            for (let start of wordList) {
+            for (let start of validWords) {
                 let queue = [[start, 0]];
                 let visited = new Set([start]);
 
@@ -144,7 +149,16 @@
         // Start a new game with increasing difficulty
         let minChainLength = 2;
         function startNewGame() {
-            let pair = findWordPair(minChainLength);
+            selectedWordLength = parseInt(document.getElementById("wordLength").value);
+            const validWords = [...wordList].filter(w => w.length === selectedWordLength);
+
+            if (validWords.length === 0) {
+                document.getElementById('status').innerText = "No valid words of this length found.";
+                return;
+            }
+
+            buildGraph(validWords);
+            let pair = findWordPair(validWords, minChainLength);
             if (!pair) {
                 document.getElementById('status').innerText = "No valid word pairs found.";
                 return;
@@ -165,7 +179,7 @@
         function submitWord() {
             let input = document.getElementById('wordInput').value.toLowerCase().trim();
 
-            if (!wordList.has(input)) {
+            if (!wordList.has(input) || input.length !== selectedWordLength) {
                 document.getElementById('status').innerText = "Invalid word!";
                 return;
             }
@@ -178,7 +192,7 @@
             wordPath.push(input);
             currentWord = input;
             document.getElementById('wordInput').value = "";
-            document.getElementById('wordChain').innerText = wordPath.join(" → "); // Update chain display
+            document.getElementById('wordChain').innerText = wordPath.join(" → ");
 
             if (currentWord === targetWord) {
                 document.getElementById('status').innerText = "🎉 You won! Next puzzle loading...";
