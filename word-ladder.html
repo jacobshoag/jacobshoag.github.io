@@ -72,15 +72,11 @@
         <p><strong>Word Chain:</strong></p>
         <p id="wordChain">-</p>
 
-        <!-- Progress Bar Section -->
-        <p><strong>Level Progress:</strong></p>
-        <div style="background-color: #ddd; border-radius: 5px; overflow: hidden; height: 20px; margin: 10px 0;">
-            <div id="progressBar" style="height: 100%; width: 0%; background-color: #28a745;"></div>
-        </div>
-        <p id="progressText">-</p>
+        <!-- Display minimum number of steps -->
+        <p><strong>🧠 Minimum Steps Required:</strong> <span id="minSteps">-</span></p>
 
         <a href="resources.html" class="button">Return to Resources</a>
-        
+
         <h3>🔍 How the Algorithm Works</h3>
         <p>
             The game uses a Breadth-First Search (BFS) algorithm to find the shortest path between words. It builds a word graph where each valid word is connected to words that differ by just one letter, then explores transformations step by step. As you play, the game gives you puzzles with longer shortest possible chains.
@@ -186,7 +182,7 @@
             document.getElementById('status').innerText = "Game started! Enter words to reach the target.";
             document.getElementById('wordChain').innerText = wordPath.join(" → ");
             document.getElementById('wordInput').value = "";
-            updateProgressBar();
+            document.getElementById('minSteps').innerText = minPathLength;
             minChainLength++; // Increase difficulty for next game
         }
 
@@ -213,7 +209,6 @@
             currentWord = input;
             document.getElementById('wordInput').value = "";
             document.getElementById('wordChain').innerText = wordPath.join(" → ");
-            updateProgressBar();
 
             if (currentWord === targetWord) {
                 document.getElementById('status').innerText = "🎉 You won! Next puzzle loading...";
@@ -228,14 +223,6 @@
             } else {
                 document.getElementById('status').innerText = "Good! Keep going.";
             }
-        }
-
-        // Update the progress bar
-        function updateProgressBar() {
-            const progress = wordPath.length - 1;
-            const percent = Math.min((progress / minPathLength) * 100, 100);
-            document.getElementById('progressBar').style.width = percent + "%";
-            document.getElementById('progressText').innerText = `Step ${progress} of ${minPathLength}`;
         }
 
         // Restart game manually
