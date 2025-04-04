@@ -72,12 +72,19 @@
         <p><strong>Word Chain:</strong></p>
         <p id="wordChain">-</p>
 
-        <a href="resources.html" class="button">Return to Resources</a>
-<h3>🔍 How the Algorithm Works</h3>
-<p>
-    The game uses a Breadth-First Search (BFS) algorithm to find the shortest path between words. It builds a word graph where each valid word is connected to words that differ by just one letter, then explores transformations step by step. As you play, the game gives you puzzles with longer shortest possible chains.
-</p>
+        <!-- Progress Bar Section -->
+        <p><strong>Level Progress:</strong></p>
+        <div style="background-color: #ddd; border-radius: 5px; overflow: hidden; height: 20px; margin: 10px 0;">
+            <div id="progressBar" style="height: 100%; width: 0%; background-color: #28a745;"></div>
+        </div>
+        <p id="progressText">-</p>
 
+        <a href="resources.html" class="button">Return to Resources</a>
+        
+        <h3>🔍 How the Algorithm Works</h3>
+        <p>
+            The game uses a Breadth-First Search (BFS) algorithm to find the shortest path between words. It builds a word graph where each valid word is connected to words that differ by just one letter, then explores transformations step by step. As you play, the game gives you puzzles with longer shortest possible chains.
+        </p>
     </div>
 
     <script>
@@ -87,6 +94,8 @@
         let targetWord = "";
         let wordPath = [];
         let selectedWordLength = 3;
+        let minChainLength = 2;
+        let minPathLength = 0;
 
         // Load the word list from a text file
         async function loadWords() {
@@ -148,11 +157,10 @@
                     }
                 }
             }
-            return pairs.length > 0 ? pairs[Math.floor(Math.random() * pairs.length)] : null;
+            return pairs.length > 0 ? { pair: pairs[Math.floor(Math.random() * pairs.length)], steps: minSteps } : null;
         }
 
         // Start a new game with increasing difficulty
-        let minChainLength = 2;
         function startNewGame() {
             selectedWordLength = parseInt(document.getElementById("wordLength").value);
             const validWords = [...wordList].filter(w => w.length === selectedWordLength);
@@ -163,13 +171,14 @@
             }
 
             buildGraph(validWords);
-            let pair = findWordPair(validWords, minChainLength);
-            if (!pair) {
+            let result = findWordPair(validWords, minChainLength);
+            if (!result) {
                 document.getElementById('status').innerText = "No valid word pairs found.";
                 return;
             }
 
-            [currentWord, targetWord] = pair;
+            [currentWord, targetWord] = result.pair;
+            minPathLength = result.steps;
             wordPath = [currentWord];
 
             document.getElementById('startWord').innerText = currentWord;
@@ -177,6 +186,7 @@
             document.getElementById('status').innerText = "Game started! Enter words to reach the target.";
             document.getElementById('wordChain').innerText = wordPath.join(" → ");
             document.getElementById('wordInput').value = "";
+            updateProgressBar();
             minChainLength++; // Increase difficulty for next game
         }
 
@@ -194,10 +204,16 @@
                 return;
             }
 
+            if (wordPath.includes(input)) {
+                document.getElementById('status').innerText = "You already used that word!";
+                return;
+            }
+
             wordPath.push(input);
             currentWord = input;
             document.getElementById('wordInput').value = "";
             document.getElementById('wordChain').innerText = wordPath.join(" → ");
+            updateProgressBar();
 
             if (currentWord === targetWord) {
                 document.getElementById('status').innerText = "🎉 You won! Next puzzle loading...";
@@ -214,6 +230,14 @@
             }
         }
 
+        // Update the progress bar
+        function updateProgressBar() {
+            const progress = wordPath.length - 1;
+            const percent = Math.min((progress / minPathLength) * 100, 100);
+            document.getElementById('progressBar').style.width = percent + "%";
+            document.getElementById('progressText').innerText = `Step ${progress} of ${minPathLength}`;
+        }
+
         // Restart game manually
         function restartGame() {
             minChainLength = 2;
@@ -223,14 +247,15 @@
         // Load words and start game
         loadWords();
 
-        // Allow Enter key to submit
-        document.getElementById("wordInput").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                submitWord();
-            }
+        // Enable Enter key for word input
+        window.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("wordInput").addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    submitWord();
+                }
+            });
         });
-
     </script>
 
 </body>
