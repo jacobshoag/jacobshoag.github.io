@@ -80,6 +80,31 @@
             background-color: #0056b3;
         }
 
+        /* ---- Responsive image helpers (added) ---- */
+        .responsive-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+        .media-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 12px 0;
+        }
+        @media (max-width: 700px) {
+            .media-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        figure img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        pre { overflow-x: auto; }
+        /* ---- end helpers ---- */
     </style>
 </head>
 <body>
@@ -100,9 +125,10 @@
         <h2>Hispanic Heritage Month</h2>
         <p>¡Feliz Mes de la Herencia Hispana! / Happy Heritage Month 🎉</p>
 
-        <div style="display:flex; flex-wrap:wrap; gap:12px; margin:12px 0;">
-            <img src="assets/images/heritage1.jpg" alt="Hispanic Heritage Month celebration" style="max-width:45%; border-radius:6px;">
-            <img src="assets/images/heritage2.jpg" alt="Meeting with Oscar Chacón" style="max-width:45%; border-radius:6px;">
+        <!-- changed: use responsive grid + class, removed inline widths -->
+        <div class="media-row">
+            <img src="assets/images/heritage1.jpg" alt="Hispanic Heritage Month celebration" class="responsive-img" loading="lazy">
+            <img src="assets/images/heritage2.jpg" alt="Meeting with Oscar Chacón" class="responsive-img" loading="lazy">
         </div>
 
         <p>
@@ -114,12 +140,12 @@
         </p>
         
      
-        <h2>Torah Twins – Match Your Parsha</h2>
+        <h2>Torah Twins – Match Your Parsha</h2>
         <p>
-            Ever wondered which famous Jewish personality shared your Bar/Bat Mitzvah parsha? <em>Torah Twins</em> calculates the Hebrew birthdate for hundreds of notable Jews, advances 13 years, and identifies the parsha that fell on the first Shabbat after (or on) their 13th birthday. Search the database or just browse and discover your own “Torah twin.”
+            Ever wondered which famous Jewish personality shared your Bar/Bat Mitzvah parsha? <em>Torah Twins</em> calculates the Hebrew birthdate for hundreds of notable Jews, advances 13 years, and identifies the parsha that fell on the first Shabbat after (or on) their 13th birthday. Search the database or just browse and discover your own “Torah twin.”
         </p>
         <p>
-            <a href="https://torahtwins.dyslex-kriyah.com/" target="_blank" rel="noopener" class="button">Explore Torah Twins</a>
+            <a href="https://torahtwins.dyslex-kriyah.com/" target="_blank" rel="noopener" class="button">Explore Torah Twins</a>
         </p>
 
         <h2>Word Swap Game</h2>
@@ -170,7 +196,8 @@ python word_swap_jshoag.py
         </p>
         
         <h2>Organizing Short Study Abroad Trip - Mexico City's Jewish Community</h2>
-        <img src="assets/images/mexico_city_synagouge.jpg" alt="Mexico City Synagogue">
+        <!-- added responsive class -->
+        <img src="assets/images/mexico_city_synagouge.jpg" alt="Mexico City Synagogue" class="responsive-img" loading="lazy">
         <p>
             I am attempting to organize a trip to visit Mexico City and learn more about the history and strength of Mexico's Jewish community. The trip would take place in late May. If you are interested in participating or in joining a group of students in Cleveland focused on Hispanic-Jewish heritage, please contact me at jacob.shoag [at] fuchsmizrachi.org.
         </p>
@@ -204,11 +231,13 @@ python word_swap_jshoag.py
 <p>
     When I was studying for the AP Micro exam in 8th grade, I had a hard time understanding the review book's explanation of deadweight loss for price floors and price ceilings. I assumed that it was my mistake, but it's actually an error in the College Board's treatment of the subject. Take a look at the following question (from p. 135 here <a href="https://apcentral.collegeboard.org/media/pdf/ap-microeconomics-course-and-exam-description.pdf" target="_blank">College Board Course and Exam Description</a>). An image is below:
 </p>
-<img src="assets/images/college_board_micro_q.jpg" alt="College Board AP Microeconomics Question">
+<!-- added responsive class -->
+<img src="assets/images/college_board_micro_q.jpg" alt="College Board AP Microeconomics Question" class="responsive-img" loading="lazy">
 <p>
     The College Board says the correct answer is E. That assumes, though, that even with a price floor or a price ceiling, the highest value purchasers or sellers will still get to transact. That isn't necessarily the case. A paper by Glaeser and Luttmer (2003) (<a href="https://users.nber.org/~luttmer/rentcontrol.pdf" target="_blank">link to paper</a>) shows that if things are allocated randomly with price controls, then the deadweight loss could be much higher!
 </p>
-<img src="assets/images/Glaeser_Luttmer.jpg" alt="Glaeser and Luttmer Paper Insights">
+<!-- added responsive class -->
+<img src="assets/images/Glaeser_Luttmer.jpg" alt="Glaeser and Luttmer Paper Insights" class="responsive-img" loading="lazy">
 <p>
     What should you do? Well, I recommend just answering things the way the College Board would like you to answer. However, if this confused you like it confused me, it's helpful to know you're not wrong. The College Board's solution depends on a really non-obvious assumption that is probably incorrect.
 </p>
