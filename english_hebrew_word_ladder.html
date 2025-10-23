@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Word Ladder Game – English & Hebrew</title>
   <style>
     body {
@@ -30,6 +30,17 @@
       font-weight: bold;
       color: #007bff;
     }
+    .button {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .button:hover { background-color: #0056b3; }
 
     /* ===== Desktop on-screen Hebrew keypad (palette) ===== */
     .kbd-grid {
@@ -38,6 +49,7 @@
       max-width: 500px;
       gap: 6px;
       grid-template-columns: repeat(13, 1fr);
+      direction: rtl;             /* flow keys right → left */
     }
     .kbd-grid button {
       padding: 6px 0;
@@ -85,6 +97,8 @@
 
     <p><strong>🧠 Minimum Steps Required:</strong> <span id="minSteps">-</span></p>
 
+    <a href="resources.html" class="button">Return to Resources</a>
+
     <h3>🔍 How the Algorithm Works</h3>
     <p>
       The game uses a Breadth‑First Search (BFS) algorithm to find the shortest path between words. It builds a word graph where each valid word is connected to words that differ by just one letter, then explores transformations step by step. As you play, the game gives you puzzles with longer shortest possible chains.
@@ -94,9 +108,8 @@
   <script>
     /**
      * Word Ladder game supporting English and Hebrew dictionaries.
-     * Carefully merged from your bilingual file with a desktop Hebrew keypad added,
-     * plus small fixes to dictionary membership and pair selection.
-     * (Base files referenced: original English single-language version and your bilingual version.)
+     * Preserves the feel of your original English file (2 → 3 → 4 … ramp)
+     * and adds a right‑to‑left on‑screen Hebrew keypad/palette.
      */
 
     // Dictionaries
@@ -105,14 +118,14 @@
     let hebrewNormSet = new Set();    // Hebrew normalized forms for membership
 
     // Graph + game state
-    let buckets = {};                 // pattern → Set(words)
+    let buckets = {};                 // pattern → Set(words) for adjacency
     let currentWord = "";
     let targetWord  = "";
     let wordPath = [];
     let usedNorm = new Set();         // normalized forms used in chain
     let selectedWordLength = 3;
     let selectedLanguage   = 'english';
-    let minChainLength = 2;           // ramp: 2 → 3 → 4 ...
+    let minChainLength = 2;           // ramp: 2 → 3 → 4 …
     let shortestPathLen = 0;
 
     // DOM
@@ -134,7 +147,7 @@
       return stripped.split('').map(ch => H_FINAL[ch] || ch).join('');
     }
 
-    /** Language-aware normalization for distance comparisons. */
+    /** Language-aware normalization for comparing / measuring distance. */
     function normalizeWord(word) {
       if (selectedLanguage === 'hebrew') return normalizeHebrew(word);
       return word.toLowerCase();
@@ -174,9 +187,9 @@
     }
 
     /** Build pattern buckets (using normalized keys) in O(N·L). */
-    function buildBuckets(words, L) {
+    function buildBuckets(setWords, L) {
       buckets = {};
-      for (const w of words) {
+      for (const w of setWords) {
         const norm = normalizeWord(w);
         for (let i = 0; i < L; i++) {
           const key = norm.slice(0, i) + '*' + norm.slice(i + 1);
@@ -217,7 +230,7 @@
       return { dist, parent };
     }
 
-    /** Reconstruct path from parent pointers. */
+    /** Reconstruct path using a parent map. */
     function backtrack(parent, start, goal) {
       const path = [goal];
       let cur = goal;
@@ -422,17 +435,19 @@
     }
 
     function setInputLanguageUI(lang) {
-      // Strong hints for keyboards and accessibility
+      const pad = document.getElementById('heKeypad');
+
+      // Strong hints for keyboards and accessibility:
       inputEl.setAttribute('lang', lang === 'hebrew' ? 'he' : 'en');
       inputEl.dir = (lang === 'hebrew') ? 'rtl' : 'ltr';
       inputEl.autocapitalize = 'off';
       inputEl.autocomplete   = 'off';
-      inputEl.spellcheck     = (lang === 'hebrew'); // allow Hebrew suggestions if available
+      inputEl.spellcheck     = (lang === 'hebrew');
       inputEl.setAttribute('enterkeyhint', 'go');
 
-      // Show/hide in‑page keypad
-      const pad = document.getElementById('heKeypad');
+      // Show/hide in‑page keypad (palette), and ensure it flows RTL in Hebrew
       if (lang === 'hebrew') {
+        pad.dir = 'rtl';
         pad.style.display = 'grid';
         buildHebrewKeypad();
       } else {
