@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Ladder Game – English & Hebrew</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, button, select {
+            font-size: 1rem;
+            padding: 8px;
+            margin: 5px;
+        }
+        #status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        #wordChain {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Word Ladder Game</h1>
+    <div class="container">
+        <p>Transform the start word into the target word, changing one letter at a time. Each step must be a real word!</p>
+
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect">
+            <option value="english" selected>English</option>
+            <option value="hebrew">Hebrew</option>
+        </select>
+
+        <label for="wordLength">Select Word Length:</label>
+        <select id="wordLength">
+            <option value="3">3-Letter Words</option>
+            <option value="4">4-Letter Words</option>
+        </select>
+        <button onclick="restartGame()">Start Game</button>
+
+        <p><strong>Start Word:</strong> <span id="startWord">-</span></p>
+        <p><strong>Target Word:</strong> <span id="targetWord">-</span></p>
+
+        <input type="text" id="wordInput" placeholder="Enter next word" />
+        <button onclick="submitWord()">Submit</button>
+        <p id="status"></p>
+
+        <!-- Display the word chain -->
+        <p><strong>Word Chain:</strong></p>
+        <p id="wordChain">-</p>
+
+        <!-- Display minimum number of steps -->
+        <p><strong>🧠 Minimum Steps Required:</strong> <span id="minSteps">-</span></p>
+
+        <!-- Game description -->
+        <h3>🔍 How the Algorithm Works</h3>
+        <p>
+            The game uses a Breadth‑First Search (BFS) algorithm to find the shortest path between words. It builds a word graph where each valid word is connected to words that differ by just one letter, then explores transformations step by step. As you play, the game gives you puzzles with longer shortest possible chains.
+        </p>
+    </div>
+
+    <script>
+    /**
+     * Word Ladder game supporting English and Hebrew dictionaries.
+     *
+     * To add more Hebrew words, populate assets/other/hebrew_words.txt with one word per line.
+     * Sources for Hebrew vocabularies include the 10,000‑word frequency list described by Teach Me Hebrew【156377173089231†L14-L20】
+     * and the LibreOffice Hebrew dictionary available via Levidrome List【611009919349685†L30-L36】.
+     */
+
+    let englishWords = new Set();      // full English dictionary
+    let hebrewWords = new Set();       // full Hebrew dictionary
+    let buckets = {};                  // pattern → Set(words) adjacency
+    let currentWord = "";
+    let targetWord = "";
+    let wordPath = [];
+    let selectedWordLength = 3;
+    let selectedLanguage = 'english';
+    let minChainLength = 2;
+    let shortestPathLen = 0;
+    
+    // DOM references
+    const inputEl = document.getElementById('wordInput');
+    const statusEl = document.getElementById('status');
+    const chainEl = document.getElementById('wordChain');
+    const startEl = document.getElementById('startWord');
+    const targetEl = document.getElementById('targetWord');
+    const minEl = document.getElementById('minSteps');
+    const lengthEl = document.getElementById('wordLength');
+    const langEl = document.getElementById('languageSelect');
+
+    // Map final Hebrew forms to standard forms for comparison (normalize end letters)
+    const hebrewFinalMap = {
+        'ך': 'כ',
+        'ם': 'מ',
+        'ן': 'נ',
+        'ף': 'פ',
+        'ץ': 'צ'
+    };
+
+    /** Remove niqqud (vowel marks) and normalize final letter forms. */
+    function normalizeHebrew(word) {
+        // Remove vowel points (Unicode points 0x05B0‑0x05BC, 0x05BD‑0x05C5, 0x05C7)
+        const stripped = word.replace(/[\u05B0-\u05BC\u05BD-\u05C5\u05C7]/g, '');
+        return stripped.split('').map(ch => hebrewFinalMap[ch] || ch).join('');
+    }
+
+    /** Normalize a word based on current language. */
+    function normalizeWord(word) {
+        return (selectedLanguage === 'hebrew') ? normalizeHebrew(word) : word;
+    }
+
+    /** Disable or enable controls during loading or auto‑advance. */
+    function disableInputs(disabled) {
+        inputEl.disabled = disabled;
+        document.querySelector("button[onclick='submitWord()']").disabled = disabled;
+        document.querySelector("button[onclick='restartGame()']").disabled = disabled;
+        lengthEl.disabled = disabled;
+        langEl.disabled = disabled;
+    }
+
+    /** Load both English and Hebrew dictionaries. */
+    async function loadDictionaries() {
+        disableInputs(true);
+        try {
+            const [engText, hebText] = await Promise.all([
+                fetch('assets/other/corncob_lowercase.txt').then(r => r.text()),
+                fetch('assets/other/hebrew_words.txt').then(r => r.text())
+            ]);
+            englishWords = new Set(engText.split(/\r?\n/).map(w => w.trim()).filter(Boolean));
+            hebrewWords = new Set(hebText.split(/\r?\n/).map(w => w.trim()).filter(Boolean));
+            restartGame();
+        } catch (error) {
+            statusEl.innerText = "Error loading word lists.";
+            console.error('Failed to load dictionaries:', error);
+        } finally {
+            disableInputs(false);
+        }
+    }
+
+    /** Build buckets mapping patterns (with a wildcard) to words for neighbor lookup. */
+    function buildBuckets(words, L) {
+        buckets = {};
+        words.forEach(word => {
+            const norm = normalizeWord(word);
+            for (let i = 0; i < L; i++) {
+                const key = norm.slice(0, i) + '*' + norm.slice(i + 1);
+                if (!buckets[key]) buckets[key] = new Set();
+                buckets[key].add(word);
+            }
+        });
+    }
+
+    /** Generate neighbor words that differ by exactly one normalized letter. */
+    function* neighbors(word) {
+        const norm = normalizeWord(word);
+        for (let i = 0; i < norm.length; i++) {
+            const key = norm.slice(0, i) + '*' + norm.slice(i + 1);
+            const group = buckets[key];
+            if (!group) continue;
+            for (const other of group) {
+                if (other !== word) yield other;
+            }
+        }
+    }
+
+    /** BFS shortest path from start to goal. Returns array path or null. */
+    function bfsShortestPath(start, goal) {
+        if (normalizeWord(start) === normalizeWord(goal)) return [start];
+        const q = [start];
+        const seen = new Set([start]);
+        const parent = new Map();
+        while (q.length) {
+            const w = q.shift();
+            for (const nb of neighbors(w)) {
+                if (seen.has(nb)) continue;
+                seen.add(nb);
+                parent.set(nb, w);
+                if (normalizeWord(nb) === normalizeWord(goal)) {
+                    // reconstruct path
+                    const path = [nb];
+                    let cur = nb;
+                    while (cur !== start) {
+                        cur = parent.get(cur);
+                        path.push(cur);
+                    }
+                    path.reverse();
+                    return path;
+                }
+                q.push(nb);
+            }
+        }
+        return null;
+    }
+
+    /** Run a single‑source BFS from start, returning distances and parent map. */
+    function bfsFrom(start) {
+        const dist = new Map([[start, 0]]);
+        const parent = new Map();
+        const q = [start];
+        while (q.length) {
+            const w = q.shift();
+            const d = dist.get(w);
+            for (const nb of neighbors(w)) {
+                if (dist.has(nb)) continue;
+                dist.set(nb, d + 1);
+                parent.set(nb, w);
+                q.push(nb);
+            }
+        }
+        return { dist, parent };
+    }
+
+    /** Reconstruct a path given a parent map produced by bfsFrom. */
+    function backtrack(parent, start, goal) {
+        const path = [goal];
+        let cur = goal;
+        while (cur !== start) {
+            const p = parent.get(cur);
+            if (!p) return null;
+            cur = p;
+            path.push(cur);
+        }
+        path.reverse();
+        return path;
+    }
+
+    /** Choose a start/goal pair with true shortest path length ≥ minLen. */
+    function choosePair(validWords, minLen) {
+        const wordsArr = Array.from(validWords);
+        if (wordsArr.length < 2) return null;
+        const TRIES = 25;
+        for (let t = 0; t < TRIES; t++) {
+            const start = wordsArr[Math.floor(Math.random() * wordsArr.length)];
+            const { dist, parent } = bfsFrom(start);
+            const candidates = [];
+            for (const [w, d] of dist.entries()) {
+                if (w !== start && d >= minLen) candidates.push([w, d]);
+            }
+            if (!candidates.length) continue;
+            candidates.sort((a, b) => b[1] - a[1]);
+            const [goal, d] = candidates[0];
+            const path = backtrack(parent, start, goal);
+            if (path && path.length - 1 === d) {
+                return { start, goal, pathLen: d };
+            }
+        }
+        return null;
+    }
+
+    /** Start a new game with the current settings. */
+    function startNewGame() {
+        selectedWordLength = parseInt(lengthEl.value, 10);
+        selectedLanguage = langEl.value;
+        const source = (selectedLanguage === 'hebrew') ? hebrewWords : englishWords;
+        // Filter words by length (after normalization) and ensure only alphabetic (no numbers)
+        const validWords = new Set();
+        source.forEach(w => {
+            const norm = normalizeWord(w);
+            if (norm.length === selectedWordLength && /^[\p{L}]+$/u.test(norm)) {
+                validWords.add(w);
+            }
+        });
+        if (validWords.size < 2) {
+            statusEl.innerText = "Not enough words of this length in the selected language.";
+            return;
+        }
+        buildBuckets(validWords, selectedWordLength);
+        const pick = choosePair(validWords, minChainLength);
+        if (!pick) {
+            statusEl.innerText = "No solvable pair found. Try another length or language.";
+            return;
+        }
+        currentWord = pick.start;
+        targetWord = pick.goal;
+        shortestPathLen = pick.pathLen;
+        wordPath = [currentWord];
+        startEl.innerText = currentWord;
+        targetEl.innerText = targetWord;
+        minEl.innerText = shortestPathLen;
+        chainEl.innerText = wordPath.join(" → ");
+        inputEl.value = "";
+        statusEl.innerText = "Game started! Enter words to reach the target.";
+        minChainLength++;
+    }
+
+    /** Validate the player's input and progress the game. */
+    function submitWord() {
+        const input = inputEl.value.trim();
+        if (!input) return;
+        // Validate existence in dictionary
+        const dict = (selectedLanguage === 'hebrew') ? hebrewWords : englishWords;
+        if (!dict.has(input)) {
+            statusEl.innerText = "That word is not in the allowed dictionary.";
+            return;
+        }
+        // Validate length match
+        if (normalizeWord(input).length !== selectedWordLength) {
+            statusEl.innerText = "Word must be exactly " + selectedWordLength + " letters (ignoring niqqud).";
+            return;
+        }
+        // Validate single letter difference
+        const normCurrent = normalizeWord(currentWord);
+        const normInput = normalizeWord(input);
+        let diff = 0;
+        for (let i = 0; i < normCurrent.length; i++) {
+            if (normCurrent[i] !== normInput[i]) diff++;
+            if (diff > 1) break;
+        }
+        if (diff !== 1) {
+            statusEl.innerText = "Word must differ by exactly one letter!";
+            return;
+        }
+        // Prevent reuse
+        if (wordPath.includes(input)) {
+            statusEl.innerText = "You already used that word!";
+            return;
+        }
+        // Valid move
+        wordPath.push(input);
+        currentWord = input;
+        chainEl.innerText = wordPath.join(" → ");
+        inputEl.value = "";
+        if (normalizeWord(currentWord) === normalizeWord(targetWord)) {
+            statusEl.innerText = "🎉 You won! Next puzzle loading...";
+            disableInputs(true);
+            setTimeout(() => {
+                disableInputs(false);
+                startNewGame();
+            }, 1200);
+        } else {
+            statusEl.innerText = "Good! Keep going.";
+        }
+    }
+
+    /** Restart the game manually and reset difficulty ramp. */
+    function restartGame() {
+        minChainLength = 2;
+        startNewGame();
+    }
+
+    // Load dictionaries on first load
+    loadDictionaries();
+    
+    // Allow Enter key to submit
+    window.addEventListener("DOMContentLoaded", () => {
+        inputEl.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                submitWord();
+            }
+        });
+        // Restart game when language changes
+        langEl.addEventListener('change', () => {
+            restartGame();
+        });
+    });
+    </script>
+</body>
+</html>
