@@ -79,6 +79,15 @@
         .button:hover {
             background-color: #0056b3;
         }
+.button-center {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0 24px; /* slightly more balanced spacing */
+}
+.button {
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
 
         /* ---- Responsive image helpers (added) ---- */
         .responsive-img {
@@ -191,66 +200,54 @@
         <p>
             Ever wondered which famous Jewish personality shared your Bar/Bat Mitzvah parsha? <em>Torah Twins</em> calculates the Hebrew birthdate for hundreds of notable Jews, advances 13 years, and identifies the parsha that fell on the first Shabbat after (or on) their 13th birthday. Search the database or just browse and discover your own “Torah twin.”
         </p>
-        <p>
-            <a href="https://torahtwins.dyslex-kriyah.com/" target="_blank" rel="noopener" class="button">Explore Torah Twins</a>
-        </p>
+ <div class="button-center">
+  <a href="https://torahtwins.dyslex-kriyah.com/" target="_blank" rel="noopener" class="button">
+    Explore Torah Twins
+  </a>
+</div>
 
-        <!-- NEW: Word Swap title image -->
-        <img src="assets/images/WordSwapImage.png"
-             alt="Word Swap Game title image showing CAT → COT → DOT"
-             class="responsive-img" loading="lazy"
-             sizes="(max-width:700px) 100vw, 900px">
 
-        <h2>Word Swap Game</h2>
+   
 
-        <p>
-            In addition to my love for reading, I'm also an AP Computer Science student. To sharpen my Python skills—and as a nod to my interest in dyslexia—I created a fun word-swap game that challenges players to transform one word into another, one letter at a time.
-        </p>
+<h2>Word Swap Game</h2>
 
-        <p>
-            The Word Swap game challenges you to transform one word into another, changing <strong>one letter at a time</strong>. Each intermediate word must be a real word. For example:
-            <strong>CAT → COT → DOT</strong>.
-        </p>
+<!-- Image now comes immediately after the heading -->
+<img src="assets/images/WordSwapImage.png"
+     alt="Word Swap Game title image showing CAT → COT → DOT"
+     class="responsive-img" loading="lazy"
+     sizes="(max-width:700px) 100vw, 900px">
 
-        <p>
-            <strong>How difficulty increases</strong>:
-        </p>
-        <ul>
-            <li>Your first puzzle might only require two or three steps.</li>
-            <li>As you solve more, the game increases the difficulty by selecting word pairs that require longer transformation chains.</li>
-            <li>Eventually, you’ll need to find 5, 6, or even 10-step transformations.</li>
-        </ul>
+<p>
+    I built <em>Word Swap</em> to sharpen my Python skills and create a fast, dyslexia-aware word-ladder puzzle. 
+    The goal is simple: transform one word into another, changing <strong>one letter at a time</strong>. 
+    Each step must be a real word. Example: <strong>CAT → COT → DOT</strong>.
+</p>
 
-        <h3>⬇️ Download the Python Version</h3>
-        <p>
-            This game runs in Python. You can download the script and the necessary word list below:
-        </p>
-        <ul>
-            <li><a href="assets/scripts/word_swap_jshoag.py" download>Download Python Script</a></li>
-            <li><a href="assets/other/corncob_lowercase.txt" download>Download Common Word List</a></li>
-        </ul>
+<p><strong>How difficulty increases</strong>:</p>
+<ul>
+    <li>Early puzzles take just a couple of steps.</li>
+    <li>As you progress, the game selects pairs that require longer chains.</li>
+    <li>Advanced puzzles may need 5–10 steps (or more).</li>
+</ul>
 
-        <h3>📌 How to Run the Game</h3>
-        <p>
-            1⃣ Make sure you have <strong>Python 3 installed</strong> on your computer.<br>
-            2⃣ Download the <strong>Python script</strong> and the <strong>dictionary file</strong> above.<br>
-            3⃣ Place both files in the same folder.<br>
-            4⃣ Open a <strong>terminal or command prompt</strong> and navigate to the folder.<br>
-            5⃣ Run this command:
-        </p>
-        <pre>
-python word_swap_jshoag.py
-        </pre>
+<h3>⬇️ Download the Python Version</h3>
+<p>
+    This game runs in Python. Download the script and the word list:
+</p>
+<ul>
+    <li><a href="assets/scripts/word_swap_jshoag.py" download>Download Python Script</a></li>
+    <li><a href="assets/other/corncob_lowercase.txt" download>Download Common Word List</a></li>
+</ul>
 
-        <p>
-            You can also try the game below:
-        </p>
-        <p>
-            <a href="english_hebrew_word_ladder.html" class="button">Play the Word Swap Game</a>
-        </p>
-        <p>
-            The game will start in your terminal, and you can enter words to play.
-        </p>
+<h3>📌 Play in the Browser</h3>
+<p>You can also try the game below:</p>
+<div class="button-center">
+    <a href="english_hebrew_word_ladder.html" class="button">Play the Word Swap Game</a>
+</div>
+<p style="font-size:0.9rem;color:#666;margin-top:-8px;">
+    No install needed—runs in your browser.
+</p>
+
         
         <h2>Organizing Short Study Abroad Trip - Mexico City's Jewish Community</h2>
         <!-- added responsive class -->
