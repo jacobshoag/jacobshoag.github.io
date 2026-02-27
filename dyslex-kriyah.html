@@ -243,6 +243,83 @@
       background-color: #007bff;
       color: white;
     }
+
+    /* Berakhot download section styles */
+    .resource-card {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      margin-top: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .resource-card .resource-left {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex: 1 1 520px;
+      min-width: 280px;
+    }
+
+    .resource-card img.resource-image {
+      width: 200px;
+      border-radius: 10px;
+      border: 3px solid #e0e0e0;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .resource-title {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+    }
+
+    .resource-caption {
+      font-size: 0.95rem;
+      color: #555;
+      margin-top: 6px;
+    }
+
+    .resource-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 0 0 auto;
+      min-width: 240px;
+    }
+
+    .resource-buttons a {
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .resource-mini {
+      font-size: 0.95rem;
+      color: #444;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    .resource-mini code {
+      background: rgba(0,0,0,0.05);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 650px) {
+      .resource-card img.resource-image {
+        width: 160px;
+      }
+      .resource-buttons {
+        width: 100%;
+        min-width: 0;
+      }
+    }
   </style>
 </head>
 
@@ -257,6 +334,7 @@
 
       <div class="header-buttons">
         <a href="assets/fonts/dyslexia-hebrew-extended.otf" download>Download Font</a>
+        <a href="#berakhot-downloads">Berakhot Downloads</a>
         <a href="https://dyslex-kriyah.com/">About Me</a>
       </div>
     </div>
@@ -268,8 +346,8 @@
       <section aria-labelledby="intro">
         <h2 id="intro">Dyslex-Kriyah: A Dyslexia-Friendly Hebrew Font</h2>
         <p>
-  <strong>Dyslex-Kriyah is the first research-backed dyslexia-friendly Hebrew typeface</strong> designed to improve reading accuracy and accessibility for Hebrew learners worldwide. 
-  Developed through original research and now published in a peer-reviewed academic journal (2025), the font applies evidence-based principles of dyslexia-friendly typography to Hebrew for the first time.
+          <strong>Dyslex-Kriyah is the first research-backed dyslexia-friendly Hebrew typeface</strong> designed to improve reading accuracy and accessibility for Hebrew learners worldwide.
+          Developed through original research and now published in a peer-reviewed academic journal (2025), the font applies evidence-based principles of dyslexia-friendly typography to Hebrew for the first time.
         </p>
       </section>
 
@@ -279,7 +357,7 @@
           <img src="assets/images/Tamir-iso3.png" alt="Tamir Goodman" loading="lazy">
           <div>
             <p class="endorsement-text-strong">
-              "Learning Hebrew as a foreign language can be especially challenging for those with dyslexia. 
+              "Learning Hebrew as a foreign language can be especially challenging for those with dyslexia.
               Dyslex-Kriyah is an innovative idea and a great tool for educators."
             </p>
             <p class="endorsement-source">— Tamir Goodman, "The Jewish Jordan"</p>
@@ -287,32 +365,32 @@
         </div>
       </section>
 
-<section aria-labelledby="novachai">
-  <h2 id="novachai">Special Commendation</h2>
-  <div class="endorsement">
-    <img src="assets/images/Novachai.jpg"
-     alt="NovaChai Foundation Logo"
-     class="logo-small"
-       loading="lazy">
-    <div>
-      <p style="font-size:1.1rem;">
-        Dyslex-Kriyah received a <strong>Special Commendation</strong> from the
-        <a href="https://www.novachai.org/manhig-grants/" target="_blank" rel="noopener"><strong>NovaChai Foundation</strong></a>.
-        Although their bylaws prevented awarding a grant to an out-of-state applicant, the Board voted to feature the project on their site
-        in recognition of its impact and innovation.
-      </p>
-    </div>
-  </div>
-</section>
-      
+      <section aria-labelledby="novachai">
+        <h2 id="novachai">Special Commendation</h2>
+        <div class="endorsement">
+          <img src="assets/images/Novachai.jpg"
+               alt="NovaChai Foundation Logo"
+               class="logo-small"
+               loading="lazy">
+          <div>
+            <p style="font-size:1.1rem;">
+              Dyslex-Kriyah received a <strong>Special Commendation</strong> from the
+              <a href="https://www.novachai.org/manhig-grants/" target="_blank" rel="noopener"><strong>NovaChai Foundation</strong></a>.
+              Although their bylaws prevented awarding a grant to an out-of-state applicant, the Board voted to feature the project on their site
+              in recognition of its impact and innovation.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section aria-labelledby="news">
         <h2 id="news">In the News</h2>
         <div class="endorsement">
           <img src="assets/images/cjn_logo.png" alt="Cleveland Jewish News Logo" class="logo-small" loading="lazy">
           <div>
             <p style="font-size:1.1rem;">
-              Dyslex-Kriyah was featured in the 
-              <a href="https://www.clevelandjewishnews.com/news/local_news/fuchs-junior-creates-hebrew-program-for-dyslexics/article_8fba369c-d36b-4aa4-bb66-4f927273db9f.html" 
+              Dyslex-Kriyah was featured in the
+              <a href="https://www.clevelandjewishnews.com/news/local_news/fuchs-junior-creates-hebrew-program-for-dyslexics/article_8fba369c-d36b-4aa4-bb66-4f927273db9f.html"
                  target="_blank" rel="noopener">
                 <strong>Cleveland Jewish News</strong>
               </a>, highlighting how the font helps Hebrew learners with dyslexia and how it’s being used in classrooms across Cleveland.
@@ -324,19 +402,19 @@
       <section aria-labelledby="research">
         <h2 id="research">Read the Research</h2>
         <div class="endorsement">
-          <img src="assets/images/s200_international_journal_of_education_literacy_studies._ijels_.jpg" 
-               alt="International Journal of Education & Literacy Studies cover" 
+          <img src="assets/images/s200_international_journal_of_education_literacy_studies._ijels_.jpg"
+               alt="International Journal of Education & Literacy Studies cover"
                class="journal-cover"
                loading="lazy">
           <div>
             <p style="font-size:1.1rem;">
-              My peer-reviewed paper, <em>“Dyslex-Kriyah: Developing a Dyslexia-Friendly Hebrew Font to Support Literacy in American Hebrew Readers,”</em> 
+              My peer-reviewed paper, <em>“Dyslex-Kriyah: Developing a Dyslexia-Friendly Hebrew Font to Support Literacy in American Hebrew Readers,”</em>
               was published in the <strong>International Journal of Education & Literacy Studies</strong> (2025).
             </p>
             <p>
-              <a href="https://www.proquest.com/openview/45db696ad611cc066ee266012d8dd6bf/1?pq-origsite=gscholar&cbl=2041009" 
-                 target="_blank" 
-                 rel="noopener" 
+              <a href="https://www.proquest.com/openview/45db696ad611cc066ee266012d8dd6bf/1?pq-origsite=gscholar&cbl=2041009"
+                 target="_blank"
+                 rel="noopener"
                  class="button">Read the Research</a>
             </p>
           </div>
@@ -346,7 +424,7 @@
       <section aria-labelledby="quiz">
         <h2 id="quiz">Help Improve Hebrew Accessibility!</h2>
         <p>
-          I'm researching how Dyslex-Kriyah affects letter recognition, and I need your help. 
+          I'm researching how Dyslex-Kriyah affects letter recognition, and I need your help.
           Take this quick, one-minute reading quiz—it works on both phone and computer!
         </p>
         <a href="https://reading-recorder-jacobshoag.replit.app/" target="_blank" class="button">Take the Reading Quiz</a>
@@ -359,13 +437,13 @@
         <p>Ensuring letters have a consistent baseline to reduce rotation and inversion issues.</p>
         <div class="image-comparison">
           <div>
-            <img src="assets/images/opensamech.png" 
+            <img src="assets/images/opensamech.png"
                  alt="Samech letter in Open Sans Hebrew font before dyslexia-friendly modifications"
                  loading="lazy">
             <p>Open Sans Hebrew</p>
           </div>
           <div>
-            <img src="assets/images/dyslexiasamech.png" 
+            <img src="assets/images/dyslexiasamech.png"
                  alt="Samech letter in Dyslex-Kriyah font with heavier baseline and larger opening"
                  loading="lazy">
             <p>Dyslex-Kriyah Font</p>
@@ -375,13 +453,13 @@
         <h3>2. Distinctive Shapes</h3>
         <div class="image-comparison">
           <div>
-            <img src="assets/images/nun_gimel_open.png" 
+            <img src="assets/images/nun_gimel_open.png"
                  alt="Nun and Gimel letters in Open Sans Hebrew font"
                  loading="lazy">
             <p>Open Sans Hebrew</p>
           </div>
           <div>
-            <img src="assets/images/nun_gimel_dyslexia.png" 
+            <img src="assets/images/nun_gimel_dyslexia.png"
                  alt="Nun and Gimel letters in Dyslex-Kriyah font with more distinctive shapes"
                  loading="lazy">
             <p>Dyslex-Kriyah Font</p>
@@ -391,13 +469,13 @@
         <h3>3. Wider Spacing</h3>
         <div class="image-comparison">
           <div>
-            <img src="assets/images/open_ahava.png" 
+            <img src="assets/images/open_ahava.png"
                  alt="The Hebrew word Ahava in Open Sans Hebrew font"
                  loading="lazy">
             <p>Open Sans Hebrew</p>
           </div>
           <div>
-            <img src="assets/images/dyslexia_ahava.png" 
+            <img src="assets/images/dyslexia_ahava.png"
                  alt="The Hebrew word Ahava in Dyslex-Kriyah font with wider spacing"
                  loading="lazy">
             <p>Dyslex-Kriyah Font</p>
@@ -407,25 +485,68 @@
 
       <section aria-labelledby="bencher">
         <h2 id="bencher">Dyslex-Kriyah Bencher</h2>
-        <p>I created a downloadable bencher in Dyslex-Kriyah.</p>   
+        <p>I created a downloadable bencher in Dyslex-Kriyah.</p>
         <a href="assets/other/DyslexKriya-Bencher.pdf" class="button" download>Download the Dyslex-Kriyah Bencher (PDF)</a>
         <p>
-          I hope to create more Dyslex-Kriyah resources. This work is in progress 
+          I hope to create more Dyslex-Kriyah resources. This work is in progress
           (<a href="assets/other/Talmud.pdf" target="_blank">see a sample here</a>), so check back here for updates.
         </p>
       </section>
 
+      <!-- NEW: Berakhot downloads section -->
+      <section aria-labelledby="berakhot-downloads">
+        <h2 id="berakhot-downloads">Berakhot Resources (with Nekudot)</h2>
+        <p>
+          These are dyslexia-friendly TSV files with <strong>nekudot</strong> for <strong>Rashi</strong> and <strong>Tosafot</strong> on Masechet Berakhot.
+          They’re designed for accessibility and easy integration into websites and learning tools.
+        </p>
+
+        <div class="resource-card">
+          <div class="resource-left">
+            <div style="text-align:center;">
+              <img
+                src="assets/images/berakhot-daf.jpg"
+                alt="Vilna-style daf of Masechet Berakhot with Rashi and Tosafot"
+                class="resource-image"
+                loading="lazy"
+              >
+              <div class="resource-caption">Classic Vilna-style daf layout (Berakhot)</div>
+            </div>
+
+            <div>
+              <h3 class="resource-title">Download: Berakhot Rashi + Tosafot (Nekudot)</h3>
+              <p style="margin:0;">
+                TSV format (tab-separated), one line per segment. Useful for search, rendering, and custom display.
+              </p>
+              <div class="resource-mini">
+                Files live in <code>assets/other/</code> and are ready to link directly.
+              </div>
+            </div>
+          </div>
+
+          <div class="resource-buttons">
+            <a class="button" href="assets/other/berakhot_rashi_nikud.final.tsv" download>
+              Download Rashi (TSV)
+            </a>
+            <a class="button" href="assets/other/berakhot_tosafot_nikud.final.tsv" download>
+              Download Tosafot (TSV)
+            </a>
+          </div>
+        </div>
+      </section>
+      <!-- END NEW SECTION -->
+
       <section aria-labelledby="companies">
         <h2 id="companies">Companies Using Dyslex-Kriyah</h2>
         <div class="endorsement">
-          <img src="assets/images/alephbais-color.svg" 
+          <img src="assets/images/alephbais-color.svg"
                alt="Alephbeis logo"
                class="company-logo"
                loading="lazy">
           <div>
             <p>
-              The <a href="https://alephbeis.org/dyslexic-kriah/" target="_blank" rel="noopener">Alephbeis Dyslexic Kriah Series</a> 
-              has begun publishing seforim using the Dyslex-Kriyah font. It’s exciting to see the font being adopted independently 
+              The <a href="https://alephbeis.org/dyslexic-kriah/" target="_blank" rel="noopener">Alephbeis Dyslexic Kriah Series</a>
+              has begun publishing seforim using the Dyslex-Kriyah font. It’s exciting to see the font being adopted independently
               to support more Hebrew learners with dyslexia. Check them out to find beginner and level-one seforim designed for accessible Kriah.
             </p>
           </div>
@@ -435,7 +556,7 @@
       <section aria-labelledby="thanks">
         <h2 id="thanks">Thank you!</h2>
         <p>
-          Huge thanks to my teacher, <strong>Brian Lenahan</strong>, for inspiring me to take on this project 
+          Huge thanks to my teacher, <strong>Brian Lenahan</strong>, for inspiring me to take on this project
           and for all his help along the way. I couldn’t have done this without his guidance and support!
         </p>
       </section>
