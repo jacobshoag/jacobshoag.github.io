@@ -74,27 +74,34 @@
             border-radius: 5px;
             border: none;
             cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
         }
-
         .button:hover {
             background-color: #0056b3;
         }
-.button-center {
-    display: flex;
-    justify-content: center;
-    margin: 16px 0 24px; /* slightly more balanced spacing */
-}
-.button {
-    transition: background-color 0.2s ease, transform 0.1s ease;
-}
+        .button-center {
+            display: flex;
+            justify-content: center;
+            margin: 16px 0 24px;
+        }
 
-
-        /* ---- Responsive image helpers (added) ---- */
+        /* ---- Responsive image helpers ---- */
         .responsive-img {
-            width: 100%;
+            max-width: 100%;
             height: auto;
             display: block;
             border-radius: 6px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* Cap standalone images at 520px (everything NOT inside a media-row) */
+        .responsive-img {
+            max-width: 520px;
+        }
+        /* Inside the side-by-side grid, fill the cell */
+        .media-row .responsive-img {
+            width: 100%;
+            max-width: 100%;
         }
         .media-row {
             display: grid;
@@ -128,111 +135,104 @@
         <a href="https://lor.link/">LOR Link</a>
     </nav>
 
-<h2>My Younger Brother Is in The Times of Israel!</h2>
+    <div class="container">
 
-<figure>
-    <img src="assets/images/dont-feed-the-lion.jpg"
-         alt="A lion behind bars above antisemitic graffiti"
-         class="responsive-img"
-         loading="lazy">
-    <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
-        Image from Noah Shoag's review of <em>Don't Feed the Lion</em>
-    </figcaption>
-</figure>
+        <h2>My Younger Brother Is in The Times of Israel!</h2>
+        <figure>
+            <img src="assets/images/dont-feed-the-lion.jpg"
+                 alt="A lion behind bars above antisemitic graffiti"
+                 class="responsive-img"
+                 loading="lazy">
+            <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
+                Image from Noah Shoag's review of <em>Don't Feed the Lion</em>
+            </figcaption>
+        </figure>
+        <p>
+            My younger brother, <strong>Noah Shoag</strong>, is writing for
+            <a href="https://blogs.timesofisrael.com/author/noah-shoag/" target="_blank" rel="noopener"><strong>The Times of Israel</strong></a>.
+            Check out his excellent review of <em>Don't Feed the Lion</em>.
+        </p>
+        <div class="button-center">
+            <a href="https://blogs.timesofisrael.com/author/noah-shoag/" target="_blank" rel="noopener" class="button">
+                Read Noah's Times of Israel Posts
+            </a>
+        </div>
 
-<p>
-    My younger brother, <strong>Noah Shoag</strong>, is writing for
-    <a href="https://blogs.timesofisrael.com/author/noah-shoag/" target="_blank" rel="noopener"><strong>The Times of Israel</strong></a>.
-    Check out his excellent review of <em>Don't Feed the Lion</em>.
-</p>
+        <h2>Cool Resource for Learning Trope</h2>
+        <p>
+            I recently came across
+            <a href="https://www.troptrainer.com/home" target="_blank" rel="noopener"><strong>TropTrainer</strong></a>,
+            which looks like a great tool for learning Torah trope. It seems especially helpful for dyslexic readers.
+        </p>
 
-<div class="button-center">
-    <a href="https://blogs.timesofisrael.com/author/noah-shoag/" target="_blank" rel="noopener" class="button">
-        Read Noah's Times of Israel Posts
-    </a>
-</div>
-
-
-        
-<h2>Cool Resource for Learning Trope</h2>
-<p>
-I recently came across 
-<a href="https://www.troptrainer.com/home" target="_blank" rel="noopener"><strong>TropTrainer</strong></a>, 
-which looks like a great tool for learning Torah trope. It seems especially helpful for dyslexic readers.
-</p>
-<!-- NEW POST: Clotilde Jiménez at MOCA -->
-<h2>Went to MOCA to check out the Clotilde Jiménez exhibit for our club. It's really great.</h2>
-<p>
-  One piece layers an Aztec-style figure over handwritten Western sheet music—like
-  competing identities sharing the same page. A group of collages shows kids moving
-  through a glowing jungle of faces and fragments. And there’s a church scene titled
-  <em>“La Espíritu en la Iglesia”</em> (the print we saw cheekily reads a bit like
-  “Americanized Spanish”). I’m curious to compare that to shuls and
-  “Americanized Hebrew.” If you’re in town, it’s up through Jan 4.
-</p>
-
-<div class="media-row">
-  <figure>
-    <img src="assets/images/chalchiulicue.jpg"
-         alt="Aztec-style orange and green figure printed over handwritten Western sheet music"
-         class="responsive-img" loading="lazy"
-         sizes="(max-width:700px) 100vw, 438px">
-    <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
-      Chalchiuhtlicue
-    </figcaption>
-  </figure>
-
-  <figure>
-    <img src="assets/images/ghostchildren.jpg"
-         alt="Collaged children under a surreal green glow in a jungle-like night landscape"
-         class="responsive-img" loading="lazy"
-         sizes="(max-width:700px) 100vw, 438px">
-    <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
-      Ghost Children.
-    </figcaption>
-  </figure>
-</div>
-
-<figure style="margin-top:12px;">
-  <img src="assets/images/laespiritu.jpg"
-       alt="Bold, blocky figures clapping and dancing in a church while a pianist plays; black-and-white checkered floor"
-       class="responsive-img" loading="lazy" sizes="100vw">
-  <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
-    <em>La Espíritu en la Iglesia</em>.
-  </figcaption>
-</figure>
+        <!-- Clotilde Jiménez at MOCA -->
+        <h2>Went to MOCA to check out the Clotilde Jiménez exhibit for our club. It's really great.</h2>
+        <p>
+            One piece layers an Aztec-style figure over handwritten Western sheet music—like
+            competing identities sharing the same page. A group of collages shows kids moving
+            through a glowing jungle of faces and fragments. And there's a church scene titled
+            <em>"La Espíritu en la Iglesia"</em> (the print we saw cheekily reads a bit like
+            "Americanized Spanish"). I'm curious to compare that to shuls and
+            "Americanized Hebrew." If you're in town, it's up through Jan 4.
+        </p>
+        <div class="media-row">
+            <figure>
+                <img src="assets/images/chalchiulicue.jpg"
+                     alt="Aztec-style orange and green figure printed over handwritten Western sheet music"
+                     class="responsive-img" loading="lazy"
+                     sizes="(max-width:700px) 100vw, 438px">
+                <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
+                    Chalchiuhtlicue
+                </figcaption>
+            </figure>
+            <figure>
+                <img src="assets/images/ghostchildren.jpg"
+                     alt="Collaged children under a surreal green glow in a jungle-like night landscape"
+                     class="responsive-img" loading="lazy"
+                     sizes="(max-width:700px) 100vw, 438px">
+                <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
+                    Ghost Children.
+                </figcaption>
+            </figure>
+        </div>
+        <figure style="margin-top:12px;">
+            <img src="assets/images/laespiritu.jpg"
+                 alt="Bold, blocky figures clapping and dancing in a church while a pianist plays; black-and-white checkered floor"
+                 class="responsive-img" loading="lazy" sizes="100vw">
+            <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
+                <em>La Espíritu en la Iglesia</em>.
+            </figcaption>
+        </figure>
 
         <h2>Antisemitic Graffiti at Mexico City Protest</h2>
-
-<figure>
-    <img src="assets/images/MexicoAntisemitism.jpg"
-         alt="Antisemitic graffiti reading 'Puta Judía' on the National Palace during protests"
-         class="responsive-img" loading="lazy">
-    <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
-        Antisemitic graffiti sprayed on the doors of Mexico’s National Palace during protests (2025)
-    </figcaption>
-</figure>
-<p>
-    I understand why some people are protesting. Everyone deserves a safer country. But heritage should unite us and not divide us. 
-    No community is perfect, and it’s fair to criticize political leaders like President Sheinbaum. 
-    But we can’t let that turn into an attack on the Jewish community.
-</p>
+        <figure>
+            <img src="assets/images/MexicoAntisemitism.jpg"
+                 alt="Antisemitic graffiti reading 'Puta Judía' on the National Palace during protests"
+                 class="responsive-img" loading="lazy">
+            <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
+                Antisemitic graffiti sprayed on the doors of Mexico's National Palace during protests (2025)
+            </figcaption>
+        </figure>
+        <p>
+            I understand why some people are protesting. Everyone deserves a safer country. But heritage should unite us and not divide us.
+            No community is perfect, and it's fair to criticize political leaders like President Sheinbaum.
+            But we can't let that turn into an attack on the Jewish community.
+        </p>
 
         <h2>El Sueño Americano</h2>
         <p>
-            The Hispanic Heritage Club at Mizrachi visited the 
+            The Hispanic Heritage Club at Mizrachi visited the
             <a href="https://www.maltzmuseum.org/exhibitions-programs/el-sueno-americano/" target="_blank" rel="noopener">
                 <strong>El Sueño Americano (The American Dream)</strong>
             </a> exhibit at the Maltz Museum.
-            The exhibit features Tom Kiefer’s powerful still-life photographs of items confiscated from migrants, alongside
-            Elizabeth Z. Pineda’s beautiful cyanotype portraits printed on corn husks.
-            It’s a moving look at the immigrant experience. Check it out while it’s in town — on display through February 16, 2026!
+            The exhibit features Tom Kiefer's powerful still-life photographs of items confiscated from migrants, alongside
+            Elizabeth Z. Pineda's beautiful cyanotype portraits printed on corn husks.
+            It's a moving look at the immigrant experience. Check it out while it's in town — on display through February 16, 2026!
         </p>
-
         <div class="media-row">
             <figure>
-                <img src="assets/images/2025-10-21_16-40-39_488.jpg" 
-                     alt="Students visiting the El Sueño Americano exhibit at the Maltz Museum" 
+                <img src="assets/images/2025-10-21_16-40-39_488.jpg"
+                     alt="Students visiting the El Sueño Americano exhibit at the Maltz Museum"
                      class="responsive-img" loading="lazy"
                      sizes="(max-width:700px) 100vw, 438px">
                 <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
@@ -240,8 +240,8 @@ which looks like a great tool for learning Torah trope. It seems especially help
                 </figcaption>
             </figure>
             <figure>
-                <img src="assets/images/2025-10-21_21-37-57_597.jpg" 
-                     alt="Tom Kiefer still-life photograph of confiscated combs" 
+                <img src="assets/images/2025-10-21_21-37-57_597.jpg"
+                     alt="Tom Kiefer still-life photograph of confiscated combs"
                      class="responsive-img" loading="lazy"
                      sizes="(max-width:700px) 100vw, 438px">
                 <figcaption style="font-size:.9rem;color:#666;margin-top:6px;">
@@ -249,9 +249,8 @@ which looks like a great tool for learning Torah trope. It seems especially help
                 </figcaption>
             </figure>
         </div>
-
         <figure style="margin-top:20px; padding-top:4px; border-top:1px solid #eee;">
-            <img src="assets/images/2025-10-21_21-49-41_163.png" 
+            <img src="assets/images/2025-10-21_21-49-41_163.png"
                  alt="Elizabeth Z. Pineda cyanotype portrait printed on a corn husk"
                  class="responsive-img" loading="lazy"
                  sizes="100vw">
@@ -262,83 +261,66 @@ which looks like a great tool for learning Torah trope. It seems especially help
 
         <h2>Hispanic Heritage Month</h2>
         <p>¡Feliz Mes de la Herencia Hispana! / Happy Heritage Month 🎉</p>
-
-        <!-- changed: use responsive grid + class, removed inline widths -->
         <div class="media-row">
             <img src="assets/images/heritage1.jpg" alt="Hispanic Heritage Month celebration" class="responsive-img" loading="lazy">
             <img src="assets/images/heritage2.jpg" alt="Meeting with Oscar Chacón" class="responsive-img" loading="lazy">
         </div>
-
         <p>
-            This month I got to meet <strong>Oscar Chacón</strong>, co-founder and director of 
-            <a href="https://www.alianzaamericas.org/es" target="_blank" rel="noopener">Alianza Americas</a>. 
-            He talked about immigrant rights and how strong communities can be when people work together.  
-            It was really cool to hear his perspective, especially during Hispanic Heritage Month. 
-            Check out their site if you’d like to get involved!
+            This month I got to meet <strong>Oscar Chacón</strong>, co-founder and director of
+            <a href="https://www.alianzaamericas.org/es" target="_blank" rel="noopener">Alianza Americas</a>.
+            He talked about immigrant rights and how strong communities can be when people work together.
+            It was really cool to hear his perspective, especially during Hispanic Heritage Month.
+            Check out their site if you'd like to get involved!
         </p>
-        
-     
-        <h2>Torah Twins – Match Your Parsha -תְּאוֹמֵי תּוֹרָה</h2>
-        <!-- NEW: Torah Twins image -->
+
+        <h2>Torah Twins – Match Your Parsha -תְּאוֹמֵי תּוֹרָה</h2>
         <img src="assets/images/TorahTwinsImage2.png"
              alt="Torah Twins graphic with scroll reading תְּאוֹמֵי תּוֹרָה and the prompt asking which famous Jewish personalities share your Bar/Bat Mitzvah parsha"
              class="responsive-img" loading="lazy"
              sizes="(max-width:700px) 100vw, 900px">
-
         <p>
-            Ever wondered which famous Jewish personality shared your Bar/Bat Mitzvah parsha? <em>Torah Twins</em> calculates the Hebrew birthdate for hundreds of notable Jews, advances 13 years, and identifies the parsha that fell on the first Shabbat after (or on) their 13th birthday. Search the database or just browse and discover your own “Torah twin.”
+            Ever wondered which famous Jewish personality shared your Bar/Bat Mitzvah parsha? <em>Torah Twins</em> calculates the Hebrew birthdate for hundreds of notable Jews, advances 13 years, and identifies the parsha that fell on the first Shabbat after (or on) their 13th birthday. Search the database or just browse and discover your own "Torah twin."
         </p>
- <div class="button-center">
-  <a href="https://torahtwins.dyslex-kriyah.com/" target="_blank" rel="noopener" class="button">
-    Explore Torah Twins
-  </a>
-</div>
+        <div class="button-center">
+            <a href="https://torahtwins.dyslex-kriyah.com/" target="_blank" rel="noopener" class="button">
+                Explore Torah Twins
+            </a>
+        </div>
 
+        <h2>Word Swap Game: מִשְׂחַק מִלּוּף</h2>
+        <img src="assets/images/WordSwapImage.png"
+             alt="Word Swap Game title image showing CAT → COT → DOT"
+             class="responsive-img" loading="lazy"
+             sizes="(max-width:700px) 100vw, 900px">
+        <p>
+            I built <em>Word Swap</em> to sharpen my Python skills and create a fast, dyslexia-aware word-ladder puzzle.
+            The goal is simple: transform one word into another, changing <strong>one letter at a time</strong>.
+            Each step must be a real word. Example: <strong>CAT → COT → DOT</strong>.
+        </p>
+        <p><strong>How difficulty increases</strong>:</p>
+        <ul>
+            <li>Early puzzles take just a couple of steps.</li>
+            <li>As you progress, the game selects pairs that require longer chains.</li>
+            <li>Advanced puzzles may need 5–10 steps (or more).</li>
+        </ul>
+        <h3>⬇️ Download the Python Version</h3>
+        <p>
+            This game runs in Python. Download the script and the word list:
+        </p>
+        <ul>
+            <li><a href="assets/scripts/word_swap_jshoag.py" download>Download Python Script</a></li>
+            <li><a href="assets/other/corncob_lowercase.txt" download>Download Common Word List</a></li>
+        </ul>
+        <h3>📌 Play in the Browser</h3>
+        <p>You can also try the game below:</p>
+        <div class="button-center">
+            <a href="english_hebrew_word_ladder.html" class="button">Play the Word Swap Game</a>
+        </div>
+        <p style="font-size:0.9rem;color:#666;margin-top:-8px;">
+            No install needed—runs in your browser.
+        </p>
 
-   
-
-<h2>Word Swap Game: מִשְׂחַק מִלּוּף</h2>
-
-<!-- Image now comes immediately after the heading -->
-<img src="assets/images/WordSwapImage.png"
-     alt="Word Swap Game title image showing CAT → COT → DOT"
-     class="responsive-img" loading="lazy"
-     sizes="(max-width:700px) 100vw, 900px">
-
-<p>
-    I built <em>Word Swap</em> to sharpen my Python skills and create a fast, dyslexia-aware word-ladder puzzle. 
-    The goal is simple: transform one word into another, changing <strong>one letter at a time</strong>. 
-    Each step must be a real word. Example: <strong>CAT → COT → DOT</strong>.
-</p>
-
-<p><strong>How difficulty increases</strong>:</p>
-<ul>
-    <li>Early puzzles take just a couple of steps.</li>
-    <li>As you progress, the game selects pairs that require longer chains.</li>
-    <li>Advanced puzzles may need 5–10 steps (or more).</li>
-</ul>
-
-<h3>⬇️ Download the Python Version</h3>
-<p>
-    This game runs in Python. Download the script and the word list:
-</p>
-<ul>
-    <li><a href="assets/scripts/word_swap_jshoag.py" download>Download Python Script</a></li>
-    <li><a href="assets/other/corncob_lowercase.txt" download>Download Common Word List</a></li>
-</ul>
-
-<h3>📌 Play in the Browser</h3>
-<p>You can also try the game below:</p>
-<div class="button-center">
-    <a href="english_hebrew_word_ladder.html" class="button">Play the Word Swap Game</a>
-</div>
-<p style="font-size:0.9rem;color:#666;margin-top:-8px;">
-    No install needed—runs in your browser.
-</p>
-
-        
         <h2>Organizing Short Study Abroad Trip - Mexico City's Jewish Community</h2>
-        <!-- added responsive class -->
         <img src="assets/images/mexico_city_synagouge.jpg" alt="Mexico City Synagogue" class="responsive-img" loading="lazy">
         <p>
             I am attempting to organize a trip to visit Mexico City and learn more about the history and strength of Mexico's Jewish community. The trip would take place in late May. If you are interested in participating or in joining a group of students in Cleveland focused on Hispanic-Jewish heritage, please contact me at jacob.shoag [at] fuchsmizrachi.org.
@@ -370,19 +352,18 @@ which looks like a great tool for learning Torah trope. It seems especially help
         </ul>
 
         <h2>AP Microeconomics: The Exam Has it Wrong</h2>
-<p>
-    When I was studying for the AP Micro exam in 8th grade, I had a hard time understanding the review book's explanation of deadweight loss for price floors and price ceilings. I assumed that it was my mistake, but it's actually an error in the College Board's treatment of the subject. Take a look at the following question (from p. 135 here <a href="https://apcentral.collegeboard.org/media/pdf/ap-microeconomics-course-and-exam-description.pdf" target="_blank">College Board Course and Exam Description</a>). An image is below:
-</p>
-<!-- added responsive class -->
-<img src="assets/images/college_board_micro_q.jpg" alt="College Board AP Microeconomics Question" class="responsive-img" loading="lazy">
-<p>
-    The College Board says the correct answer is E. That assumes, though, that even with a price floor or a price ceiling, the highest value purchasers or sellers will still get to transact. That isn't necessarily the case. A paper by Glaeser and Luttmer (2003) (<a href="https://users.nber.org/~luttmer/rentcontrol.pdf" target="_blank">link to paper</a>) shows that if things are allocated randomly with price controls, then the deadweight loss could be much higher!
-</p>
-<!-- added responsive class -->
-<img src="assets/images/Glaeser_Luttmer.jpg" alt="Glaeser and Luttmer Paper Insights" class="responsive-img" loading="lazy">
-<p>
-    What should you do? Well, I recommend just answering things the way the College Board would like you to answer. However, if this confused you like it confused me, it's helpful to know you're not wrong. The College Board's solution depends on a really non-obvious assumption that is probably incorrect.
-</p>
+        <p>
+            When I was studying for the AP Micro exam in 8th grade, I had a hard time understanding the review book's explanation of deadweight loss for price floors and price ceilings. I assumed that it was my mistake, but it's actually an error in the College Board's treatment of the subject. Take a look at the following question (from p. 135 here <a href="https://apcentral.collegeboard.org/media/pdf/ap-microeconomics-course-and-exam-description.pdf" target="_blank">College Board Course and Exam Description</a>). An image is below:
+        </p>
+        <img src="assets/images/college_board_micro_q.jpg" alt="College Board AP Microeconomics Question" class="responsive-img" loading="lazy">
+        <p>
+            The College Board says the correct answer is E. That assumes, though, that even with a price floor or a price ceiling, the highest value purchasers or sellers will still get to transact. That isn't necessarily the case. A paper by Glaeser and Luttmer (2003) (<a href="https://users.nber.org/~luttmer/rentcontrol.pdf" target="_blank">link to paper</a>) shows that if things are allocated randomly with price controls, then the deadweight loss could be much higher!
+        </p>
+        <img src="assets/images/Glaeser_Luttmer.jpg" alt="Glaeser and Luttmer Paper Insights" class="responsive-img" loading="lazy">
+        <p>
+            What should you do? Well, I recommend just answering things the way the College Board would like you to answer. However, if this confused you like it confused me, it's helpful to know you're not wrong. The College Board's solution depends on a really non-obvious assumption that is probably incorrect.
+        </p>
+
     </div>
 
     <footer>
